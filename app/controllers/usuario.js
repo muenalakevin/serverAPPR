@@ -1,5 +1,7 @@
 const { httpError } = require("../helpers/handleError");
 const usuarioModel = require("../models/usuario");
+const bcrypt = require("bcrypt")
+
 const getItems = async (req, res) => {
   try {
     const listAll = await usuarioModel.find({});
@@ -9,7 +11,14 @@ const getItems = async (req, res) => {
   }
 };
 
-const getItem = (req, res) => {};
+const getItem = async (req, res) => {
+    try {
+        const listAll = await usuarioModel.find({});
+        res.send({ data: listAll });
+      } catch (e) {
+        httpError(res, e);
+      }
+};
 
 const createItem = async (req, res) => {
   try {
@@ -19,10 +28,12 @@ const createItem = async (req, res) => {
       contrasenia_usuario,
       correo_usuario,
     } = req.body;
+    const salt = bcrypt.genSaltSync(11);
+    const hash = bcrypt.hashSync(contrasenia_usuario, salt);
     const resDetail = await usuarioModel.create({
       nombre_usuario,
       usuario_usuario,
-      contrasenia_usuario,
+      contrasenia_usuario: hash,
       correo_usuario,
     });
     res.send({ data: resDetail });
