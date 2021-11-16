@@ -6,3 +6,4 @@ const { login } = require('../controllers/auth')
 router.post('/',checkOrigin, login)
 
 module.exports = router
+    

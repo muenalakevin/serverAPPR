@@ -18,6 +18,12 @@ const usuarioSchema = new mongoose.Schema({
         required: true,
         unique:true
     }
+    ,
+    rol_usuario:{
+        type: String,
+        required: true,
+        unique:true
+    }
 },{
     timestamps:true,
     versionKey: false
