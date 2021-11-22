@@ -6,12 +6,14 @@ const {  getItems , getItem, createItem, updateItem, deleteItem} = require('../c
 
 router.get('/',checkOrigin,JWT, getItems)
 
-router.get('/id',checkOrigin,JWT, getItem)
+router.get('/:_id',checkOrigin,JWT, getItem)
 
 router.post('/',checkOrigin,JWT, createItem)
 
 router.patch('/',checkOrigin,JWT, updateItem)
 
-router.delete('/',checkOrigin,JWT, deleteItem)
+
+router.delete('/:_id',checkOrigin,JWT, deleteItem)
+
 
 module.exports = router

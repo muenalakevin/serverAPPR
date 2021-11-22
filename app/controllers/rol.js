@@ -4,7 +4,8 @@ const rolModel = require("../models/rol");
 const getItems = async (req, res) => {
   try {
     const listAll = await rolModel.find({});
-    res.send({ data: listAll });
+    
+    res.send(listAll);
   } catch (e) {
     httpError(res, e);
   }
@@ -37,7 +38,6 @@ const createItem = async (req, res) => {
 };
 
 const updateItem = async (req, res) => {
-  console.log(req.body);
   try {
     const { id } = req.body;
     const {

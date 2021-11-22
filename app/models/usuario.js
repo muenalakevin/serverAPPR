@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose instanceof mongoose.Mongoose;
 const usuarioSchema = new mongoose.Schema({
     nombre_usuario:{
         type: String,
@@ -21,8 +22,7 @@ const usuarioSchema = new mongoose.Schema({
     ,
     rol_usuario:{
         type: String,
-        required: true,
-        unique:true
+        required: true
     }
 },{
     timestamps:true,

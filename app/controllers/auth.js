@@ -8,7 +8,6 @@ const login = async (req, res) => {
   try {
     const { usuario_usuario, contrasenia_usuario } = req.body;
     const usuario = await usuarioModel.findOne({ usuario_usuario });
-    console.log(usuario);
     if(usuario!=null){
     if (bcrypt.compareSync(contrasenia_usuario, usuario.contrasenia_usuario)) {
       const rol = await rolModel.findOne({_id:usuario.rol_usuario})
