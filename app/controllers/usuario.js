@@ -15,6 +15,38 @@ const getItems = async (req, res) => {
     httpError(res, e);
   }
 };
+const searchUsername = async (req, res) => {
+  try {
+    const { usuario_usuario   } = req.body;
+
+    const usuario = await usuarioModel.findOne({ usuario_usuario});
+if(usuario.id!=null){
+  res.send(true);
+}else{
+  res.send(false);
+}
+     
+    } catch (e) {
+      httpError(res, e);
+    }
+};
+const searchEmail = async (req, res) => {
+  try {
+    const { correo_usuario   } = req.body;
+
+    const usuario = await usuarioModel.findOne({ correo_usuario});
+    console.log(usuario);
+if(usuario.id!=null){
+  res.send(true);
+}else{
+  res.send(false);
+}
+     
+    } catch (e) {
+      httpError(res, e);
+    }
+};
+
 
 const getItem = async (req, res) => {
     try {
@@ -30,7 +62,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    console.log( req.body.usuario);
+
     const {
       nombre_usuario,
       usuario_usuario,
@@ -71,7 +103,7 @@ const updateItem = async (req, res) => {
       rol_usuario
     } = req.body.usuario;
     let resDetail
-    console.log(req.body.usuario);
+
     if(contrasenia_usuario==null){
      resDetail = await usuarioModel.findOneAndUpdate(
       { _id},
@@ -80,10 +112,14 @@ const updateItem = async (req, res) => {
     
    
   }else{
+    
+    
+    const salt = await bcrypt.genSaltSync(11);
+    const hash =await bcrypt.hashSync(contrasenia_usuario, salt);
 
      resDetail = await usuarioModel.findOneAndUpdate(
       { _id },
-      { nombre_usuario, usuario_usuario, contrasenia_usuario, correo_usuario,rol_usuario }
+      { nombre_usuario, usuario_usuario,contrasenia_usuario: hash, correo_usuario,rol_usuario }
     );
 
   }
@@ -107,4 +143,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+module.exports = { getItems, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };
