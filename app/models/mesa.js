@@ -7,6 +7,10 @@ const mesaSchema = new mongoose.Schema({
     descripcion_mesa:{
         type: String,
 
+    },
+    estado:{
+        type: Number,
+        default: 0
     }
 },{
     timestamps:true,
