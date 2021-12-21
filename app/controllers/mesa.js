@@ -6,8 +6,6 @@ const getItems = async (req, res) => {
  
   try {
     const listAll = await mesaModel.find({});
-
-    //.io.emit("new-message", { content: req.body.content });
     res.send(listAll);
   } catch (e) {
     httpError(res, e);
@@ -56,8 +54,6 @@ const updateItem = async (req, res) => {
       nombre_mesa,
         descripcion_mesa
     } = req.body.mesa;
-
-
      let resDetail = await mesaModel.findOneAndUpdate(
       { _id},
       { nombre_mesa,
@@ -67,8 +63,7 @@ const updateItem = async (req, res) => {
    
   const listAll = await mesaModel.find({});
   req.io.emit('mesas', listAll);
-  
-  res.send({ data: resDetail });
+  res.send(resDetail );
   } catch (e) {
     httpError(res, e);
   }

@@ -1,13 +1,13 @@
 
 
 const jwt = require("jsonwebtoken");
-
+const jwt_decode= require('jwt-decode');
 const checkJWT = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
     const bearertoken = bearerHeader.split(" ")[1];
-    req.token = bearertoken;
-    jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    req.user_token = jwt_decode(bearertoken);;
+    jwt.verify(bearertoken, process.env.SECRET_KEY, (err, authData) => {
       if (err) {
         res.sendStatus(403);
       } else {
