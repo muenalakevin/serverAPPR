@@ -18,8 +18,8 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
       const  _id  = req.params._id;
-      const pedidos = await pedidoModel.find({ });
-      const pedido = await pedidoModel.findOne({ id_mesa:_id });
+
+      const pedido = await pedidoModel.findOne({ id_mesa:_id, estado:0 });
 
         res.send( pedido );
       } catch (e) {
@@ -27,6 +27,17 @@ const getItem = async (req, res) => {
       }
 };
 
+const getItem2 = async (req, res) => {
+  try {
+    const  _id  = req.params._id;
+
+    const pedido = await pedidoModel.findOne({ id_mesa:_id });
+
+      res.send( pedido );
+    } catch (e) {
+      httpError(res, e);
+    }
+};
 
 
 
@@ -144,4 +155,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, getItem,enviarPedido, createItem,updateItem, deleteItem };
+module.exports = { getItems, getItem,enviarPedido,getItem2, createItem,updateItem, deleteItem };
