@@ -138,4 +138,6 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
+
+
 module.exports = { getItems, getItem, createItem, subirFoto,updateItem, deleteItem };
