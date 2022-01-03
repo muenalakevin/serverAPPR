@@ -14,9 +14,11 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
     try {
-      const { _id } = req.body;
-      const usuario = await mesaModel.findOne({ _id });
-        res.send({ data: usuario });
+  
+      const  _id  = req.params._id;
+      const mesa = await mesaModel.findOne({ _id });
+
+        res.send(mesa);
       } catch (e) {
         httpError(res, e);
       }
@@ -52,12 +54,15 @@ const updateItem = async (req, res) => {
     const {
       _id,
       nombre_mesa,
-        descripcion_mesa
+        descripcion_mesa,
+        estado
     } = req.body.mesa;
+      
      let resDetail = await mesaModel.findOneAndUpdate(
       { _id},
       { nombre_mesa,
-        descripcion_mesa },
+        descripcion_mesa,
+        estado },
     );
     
    

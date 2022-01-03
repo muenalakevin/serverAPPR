@@ -14,7 +14,7 @@ const pedidoSchema = new mongoose.Schema({
     }],
     estado:{
         type: Number,
-        default: 0
+        default: 1
     },
     horaDeEnvio:{
         type:Date

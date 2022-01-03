@@ -6,7 +6,7 @@ const  fs = require('fs-extra');
 const getItems = async (req, res) => {
  
   try {
-    const listAll = await pedidoModel.find({estado:1});
+    const listAll = await pedidoModel.find({estado:2});
 
     //.io.emit("new-message", { content: req.body.content });
     res.send(listAll);
@@ -19,7 +19,7 @@ const getItem = async (req, res) => {
     try {
       const  _id  = req.params._id;
 
-      const pedido = await pedidoModel.findOne({ id_mesa:_id, estado:0 });
+      const pedido = await pedidoModel.findOne({ id_mesa:_id, estado:1 });
 
         res.send( pedido );
       } catch (e) {
@@ -31,7 +31,7 @@ const getItem2 = async (req, res) => {
   try {
     const  _id  = req.params._id;
 
-    const pedido = await pedidoModel.findOne({ id_mesa:_id });
+    const pedido = await pedidoModel.findOne({ id_mesa:_id, estado: {$gte : 1} });
 
       res.send( pedido );
     } catch (e) {
@@ -50,22 +50,24 @@ const createItem = async (req, res) => {
         pedidos,
         observacion
     } = req.body.pedido;
+    console.log( req.body.pedido);
     const id_mesero =  req.user_token._id;
     const resDetail = await pedidoModel.create({
         id_mesa,
         pedidos,
         id_mesero,
-        observacion
+        observacion,
+        estado:1
     });
     await mesaModel.findOneAndUpdate(
         { _id:id_mesa},
-        { estado:1},
+        { estado:2},
       );
 
     res.send(resDetail );
     const mesas = await mesaModel.find({});
     req.io.emit('mesas', mesas);
-    const pedidosAll = await pedidoModel.find({estado:1});
+    const pedidosAll = await pedidoModel.find({estado:2});
     req.io.emit('pedidos', pedidosAll);
    
   } catch (e) {
@@ -84,16 +86,18 @@ const updateItem = async (req, res) => {
     const {
       _id,
       id_mesa,
-    pedidos
+    pedidos,
+    estado
     } = req.body.pedido;
       await pedidoModel.findOneAndUpdate(
       { _id},
       { id_mesa,
-        pedidos},
+        pedidos,
+        estado},
     );
     const mesas = await mesaModel.find({});
     req.io.emit('mesas', mesas);
-    const pedidosAll = await pedidoModel.find({estado:1});
+    const pedidosAll = await pedidoModel.find({estado:2});
     req.io.emit('pedidos', pedidosAll);
 
     res.sendStatus(204);
@@ -113,18 +117,18 @@ const enviarPedido = async (req, res) => {
     
      await pedidoModel.findOneAndUpdate(
       { _id},
-      { estado:1,
+      { estado:2,
         horaDeEnvio:Date.now()
       },
     );
      await mesaModel.findOneAndUpdate(
       { _id:id_mesa},
-      { estado:2},
+      { estado:3},
     );
 
     const mesas = await mesaModel.find({});
     req.io.emit('mesas', mesas);
-    const pedidos = await pedidoModel.find({estado:1});
+    const pedidos = await pedidoModel.find({estado:2});
     req.io.emit('pedidos', pedidos);
     res.sendStatus(204)
   } catch (e) {
@@ -147,7 +151,7 @@ const deleteItem = async (req, res, next) => {
 
       const mesas = await mesaModel.find({});
       req.io.emit('mesas', mesas);
-      const pedidos = await pedidoModel.find({estado:1});
+      const pedidos = await pedidoModel.find({estado:2});
       req.io.emit('pedidos', pedidos);
     res.send({_id} );
   } catch (e) {
