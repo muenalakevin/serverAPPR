@@ -21,7 +21,12 @@ const platoSchema = new mongoose.Schema({
     },
     categorias_plato:[{
         type: [String]
-    }]
+    }],
+    estado_plato:{
+        type: Number,
+        required: true,
+        default: 0
+    },
 },{
     timestamps:true,
     versionKey: false

@@ -35,10 +35,12 @@ const createItem = async (req, res) => {
     const {
         nombre_categoria,
         descripcion_categoria,
+        estado_categoria
     } = req.body.categoria;
     const resDetail = await categoriaModel.create({
         nombre_categoria,
         descripcion_categoria,
+        estado_categoria
     });
     const listAll = await categoriaModel.find({});
     req.io.emit('categorias', listAll);
@@ -59,6 +61,7 @@ const updateItem = async (req, res) => {
       _id,
       nombre_categoria,
         descripcion_categoria,
+        estado_categoria
     } = req.body.categoria;
     let resDetail
 
@@ -66,7 +69,9 @@ const updateItem = async (req, res) => {
      resDetail = await categoriaModel.findOneAndUpdate(
       { _id},
       {nombre_categoria,
-        descripcion_categoria},
+        descripcion_categoria,
+        estado_categoria
+      },
     );
     
 

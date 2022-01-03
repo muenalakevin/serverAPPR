@@ -5,10 +5,14 @@ const categoriaSchema = new mongoose.Schema({
         required: true
     },
     descripcion_categoria:{
-        type: String,
-        required: true,
+        type: String
 
-    }
+    },
+    estado_categoria:{
+        type: Number,
+        required: true,
+        default: 0
+    },
 },{
     timestamps:true,
     versionKey: false

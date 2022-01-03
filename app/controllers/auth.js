@@ -10,6 +10,7 @@ const login = async (req, res) => {
     const usuario = await usuarioModel.findOne({ usuario_usuario });
     if(usuario!=null){
     if (bcrypt.compareSync(contrasenia_usuario, usuario.contrasenia_usuario)) {
+      await usuarioModel.findByIdAndUpdate({_id:usuario._id},{estado_usuario:1})
       const rol = await rolModel.findOne({_id:usuario.rol_usuario})
       jwt.sign({ _id:usuario._id,nombre_usuario:usuario.nombre_usuario,usuario_usuario:usuario.usuario_usuario,correo_usuario:usuario.correo_usuario,rol:rol }, "secretkey", { expiresIn: "30d" }, (err, token) => {
         res.json({

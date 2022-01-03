@@ -24,6 +24,12 @@ const usuarioSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+    ,
+    estado_usuario:{
+        type: Number,
+        required: true,
+        default: 0
+    }
 },{
     timestamps:true,
     versionKey: false

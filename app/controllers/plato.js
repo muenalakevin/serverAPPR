@@ -34,14 +34,16 @@ const createItem = async (req, res) => {
         descripcion_plato,
         receta_plato,
         precio_plato,
-        categorias_plato
+        categorias_plato,
+        estado_plato
     } = req.body.plato;
     const resDetail = await platoModel.create({
         nombre_plato,
         descripcion_plato,
         receta_plato,
         precio_plato,
-        categorias_plato
+        categorias_plato,
+        estado_plato
     });
     const listAll = await platoModel.find({});
     req.io.emit('platos', listAll);
@@ -65,7 +67,8 @@ const updateItem = async (req, res) => {
       descripcion_plato,
       receta_plato,
       precio_plato,
-      categorias_plato
+      categorias_plato,
+      estado_plato
     } = req.body.plato;
     let resDetail
  
@@ -77,7 +80,8 @@ const updateItem = async (req, res) => {
         descripcion_plato,
         receta_plato,
         precio_plato,
-        categorias_plato },
+        categorias_plato,
+        estado_plato },
     );
     
    

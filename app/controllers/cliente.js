@@ -98,35 +98,27 @@ const updateItem = async (req, res) => {
     const {
       _id,
       nombre_cliente,
-      cliente_cliente,
-      contrasenia_cliente,
+      apellido_cliente,
+      cedRuc_cliente,
       correo_cliente,
-      rol_cliente
+      direccion_cliente
     } = req.body.cliente;
     let resDetail
 
-    if(contrasenia_cliente==null){
+
      resDetail = await clienteModel.findOneAndUpdate(
       { _id},
-      { nombre_cliente, cliente_cliente, correo_cliente,rol_cliente },
+      { nombre_cliente,
+        apellido_cliente,
+        cedRuc_cliente,
+        correo_cliente,
+        direccion_cliente},
     );
     
-   
-  }else{
-    
-    
-    const salt = await bcrypt.genSaltSync(11);
-    const hash =await bcrypt.hashSync(contrasenia_cliente, salt);
 
-     resDetail = await clienteModel.findOneAndUpdate(
-      { _id },
-      { nombre_cliente, cliente_cliente,contrasenia_cliente: hash, correo_cliente,rol_cliente }
-    );
-
-  }
   const listAll = await clienteModel.find({});
   req.io.emit('clientes', listAll);
-  res.send({ data: resDetail });
+  res.send(resDetail );
   } catch (e) {
     httpError(res, e);
   }
