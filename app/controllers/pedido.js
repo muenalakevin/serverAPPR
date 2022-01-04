@@ -19,7 +19,7 @@ const getItem = async (req, res) => {
     try {
       const  _id  = req.params._id;
 
-      const pedido = await pedidoModel.findOne({ id_mesa:_id, estado:1 });
+      const pedido = await pedidoModel.findOne({ id_mesa:_id, estado:{$gte : 1,$lte :2} });
 
         res.send( pedido );
       } catch (e) {
@@ -31,7 +31,7 @@ const getItem2 = async (req, res) => {
   try {
     const  _id  = req.params._id;
 
-    const pedido = await pedidoModel.findOne({ id_mesa:_id, estado: {$gte : 1} });
+    const pedido = await pedidoModel.findOne({ id_mesa:_id, estado: {$gte : 1 ,$lte :2} });
 
       res.send( pedido );
     } catch (e) {
