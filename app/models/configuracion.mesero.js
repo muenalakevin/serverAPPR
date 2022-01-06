@@ -24,6 +24,20 @@ const configuracionMeseroSchema = new mongoose.Schema({
         type: Object,
         required: true
     },
+    colorFueraTiempo:{
+        type: Object,
+        required: true
+    },
+    colorOcupada:{
+        type: Object,
+        required: true
+    },
+    colorDisponible:{
+        type: Object,
+        required: true
+    },
+    
+
     meseroEdit:{
         type: Boolean,
         required: true,

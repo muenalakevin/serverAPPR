@@ -3,8 +3,24 @@ const pedidoModel = require("../models/pedido");
 const mesaModel = require("../models/mesa");
 const path = require('path')
 const  fs = require('fs-extra');
+
+
+const getPedidosFecha = async (req, res) => {
+  try {
+    const {
+      fechaInicio,
+      fechaFin
+  } = req.body;
+    const listAll = await pedidoModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
 const getItems = async (req, res) => {
- 
   try {
     const listAll = await pedidoModel.find({estado:2});
 
@@ -87,13 +103,15 @@ const updateItem = async (req, res) => {
       _id,
       id_mesa,
     pedidos,
-    estado
+    estado,
+    horaDeEntrega
     } = req.body.pedido;
       await pedidoModel.findOneAndUpdate(
       { _id},
       { id_mesa,
         pedidos,
-        estado},
+        estado,
+        horaDeEntrega},
     );
     const mesas = await mesaModel.find({});
     req.io.emit('mesas', mesas);
@@ -139,13 +157,14 @@ const enviarPedido = async (req, res) => {
 const deleteItem = async (req, res, next) => {
   try {
 
-    const { _id } = req.params;
+    const { id_mesa,id_pedido } = req.body;
     await mesaModel.findOneAndUpdate(
-      { _id},
-      { estado:0},
+      { _id:id_mesa},
+      { estado:1},
     );
+    console.log(id_mesa,id_pedido)
     await pedidoModel.findOneAndUpdate(
-      { id_mesa:_id},
+      { _id:id_pedido},
       { estado:-1},);
 
 
@@ -153,10 +172,10 @@ const deleteItem = async (req, res, next) => {
       req.io.emit('mesas', mesas);
       const pedidos = await pedidoModel.find({estado:2});
       req.io.emit('pedidos', pedidos);
-    res.send({_id} );
+    res.send(id_pedido );
   } catch (e) {
     httpError(res, e);
   }
 };
 
-module.exports = { getItems, getItem,enviarPedido,getItem2, createItem,updateItem, deleteItem };
+module.exports = { getItems, getPedidosFecha, getItem,enviarPedido,getItem2, createItem,updateItem, deleteItem };

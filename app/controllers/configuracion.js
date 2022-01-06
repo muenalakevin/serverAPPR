@@ -13,17 +13,58 @@ const getConfiguracionMesero = async (req, res) => {
         res.send(configuracionMesero);
     }else{
         configuracionMesero = await configuracionMeseroModel.create({
-            satisfaccionAdecuada:0,
-            satisfaccionMedia:0,
-            disatisfaccion:0,
+            satisfaccionAdecuada:5,
+            satisfaccionMedia:10,
+            disatisfaccion:15,
             colorSatisfaccion:{check:false,color: ""},
             colorSatisfaccionMedia:{check:false,color: ""},
             colorDisatisfaccion:{check:false,color: ""},
+            colorFueraTiempo:{check:false,color: ""},
+            colorOcupada:{check:false,color: ""},
+            colorDisponible:{check:false,color: ""},
             meseroEdit:false
         });
         res.send(configuracionMesero);
     }
    
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
+const updateConfiguracionMesero = async (req, res) => {
+  try {
+
+    const {
+      satisfaccionAdecuada,
+      satisfaccionMedia,
+      disatisfaccion,
+      colorSatisfaccion,
+      colorSatisfaccionMedia,
+      colorDisatisfaccion,
+      colorFueraTiempo,
+      colorOcupada,
+      colorDisponible,
+      meseroEdit
+    } = req.body;
+    let resDetail
+
+
+     resDetail = await configuracionMeseroModel.findOneAndUpdate(
+      { },
+      {satisfaccionAdecuada,
+        satisfaccionMedia,
+        disatisfaccion,
+        colorSatisfaccion,
+        colorSatisfaccionMedia,
+        colorDisatisfaccion,
+        colorFueraTiempo,
+      colorOcupada,
+      colorDisponible,
+        meseroEdit},
+    );
+    console.log(resDetail);
+  res.send(resDetail);
   } catch (e) {
     httpError(res, e);
   }
@@ -61,29 +102,6 @@ const createItem = async (req, res) => {
 };
 
 
-
-
-
-const updateItem = async (req, res) => {
-  try {
-
-    const {
-      _id,
-      categorias_seleccionadas
-    } = req.body;
-    let resDetail
-
-
-     resDetail = await configuracionMeseroModel.findOneAndUpdate(
-      { _id},
-      {categorias_seleccionadas},
-    );
-    console.log(resDetail);
-  res.send(resDetail);
-  } catch (e) {
-    httpError(res, e);
-  }
-};
 
 const deleteItem = async (req, res, next) => {
   try {
@@ -128,4 +146,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getConfiguracionMesero, getItem, createItem, updateItem, deleteItem };
+module.exports = { getConfiguracionMesero,updateConfiguracionMesero,  getItem, createItem, deleteItem };
