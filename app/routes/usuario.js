@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router();
 const checkOrigin = require('../middleware/origin')
 const JWT = require('../middleware/JWT')
-const {  getItems , getItem, createItem, searchUsername,searchEmail,updateItem, deleteItem} = require('../controllers/usuario')
+const {  getItems ,getItemsMesero, getItem, createItem, searchUsername,searchEmail,updateItem, deleteItem} = require('../controllers/usuario')
 
 router.get('/',checkOrigin,JWT, getItems)
+
+router.get('/mesero',checkOrigin,JWT, getItemsMesero)
 
 router.get('/:_id',checkOrigin,JWT, getItem)
 

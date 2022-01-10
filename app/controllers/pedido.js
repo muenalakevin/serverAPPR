@@ -9,12 +9,22 @@ const getPedidosFecha = async (req, res) => {
   try {
     const {
       fechaInicio,
-      fechaFin
+      fechaFin,
+      tipoSeleccion,
+      tipoFiltrado,
+      mesero
   } = req.body;
-    const listAll = await pedidoModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}});
+  let listAll
+    if(mesero != ""){
+      listAll = await pedidoModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin},id_mesero:mesero});
+      res.send(listAll);
+    }else{
+      listAll = await pedidoModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}});
+      res.send(listAll);
+    }
 
     //.io.emit("new-message", { content: req.body.content });
-    res.send(listAll);
+  
   } catch (e) {
     httpError(res, e);
   }

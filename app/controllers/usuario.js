@@ -15,6 +15,19 @@ const getItems = async (req, res) => {
     httpError(res, e);
   }
 };
+const getItemsMesero = async (req, res) => {
+ 
+  try {
+    const listAll = await usuarioModel.find({rol_usuario:"618f127c632c3638ced99ba9"});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
+
 const searchUsername = async (req, res) => {
   try {
     const { usuario_usuario   } = req.body;
@@ -30,6 +43,7 @@ if(usuario.id!=null){
       httpError(res, e);
     }
 };
+
 const searchEmail = async (req, res) => {
   try {
     const { correo_usuario   } = req.body;
@@ -143,4 +157,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };
+module.exports = { getItems,getItemsMesero, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };

@@ -78,7 +78,7 @@ const createItem = async (req, res) => {
     const resDetail = await comprobanteModel.create({
         pedido_comprobante,
         comprobante_comprobante,
-        cliente_comprobante,
+        cliente_comprobante,    
         fecha_comprobante,
         total_comprobante,
         iva_comprobante,
