@@ -1,7 +1,33 @@
 const { httpError } = require("../helpers/handleError");
 const configuracionMeseroModel = require("../models/configuracion.mesero");
+const configuracionCajaModel = require("../models/configuracion.caja");
 const platoModel = require("../models/plato");
 
+
+const getConfiguracionCaja = async (req, res) => {
+ 
+  try {
+
+    let configuracionCaja = await configuracionCajaModel.findOne();
+    if(configuracionCaja!=undefined){
+        res.send(configuracionCaja);
+    }else{
+      configuracionCaja = await configuracionCajaModel.create({
+          iva:12,
+          metodosPago:[],
+          cierreCaja:1,
+          colorFlechas:{check:false,color: "#212529"},
+          colorAgregarCliente:{check:false,color: "#212529"},
+          colorEditarCliente:{check:false,color: "#212529"},
+          colorPagar:{check:false,color: "#212529"},
+        });
+        res.send(configuracionCaja);
+    }
+   
+  } catch (e) {
+    httpError(res, e);
+  }
+};
 
 const getConfiguracionMesero = async (req, res) => {
  
@@ -16,12 +42,12 @@ const getConfiguracionMesero = async (req, res) => {
             satisfaccionAdecuada:5,
             satisfaccionMedia:10,
             disatisfaccion:15,
-            colorSatisfaccion:{check:false,color: ""},
-            colorSatisfaccionMedia:{check:false,color: ""},
-            colorDisatisfaccion:{check:false,color: ""},
-            colorFueraTiempo:{check:false,color: ""},
-            colorOcupada:{check:false,color: ""},
-            colorDisponible:{check:false,color: ""},
+            colorSatisfaccion:{check:false,color: "#28a745"},
+            colorSatisfaccionMedia:{check:false,color: "#ffc107"},
+            colorDisatisfaccion:{check:false,color: "#dc3545"},
+            colorFueraTiempo:{check:false,color: "#343a40"},
+            colorOcupada:{check:false,color: "#6c757d"},
+            colorDisponible:{check:false,color: "#0d6efd"},
             meseroEdit:false
         });
         res.send(configuracionMesero);
@@ -31,7 +57,37 @@ const getConfiguracionMesero = async (req, res) => {
     httpError(res, e);
   }
 };
+const updateConfiguracionCaja = async (req, res) => {
+  try {
+    const {
+      iva,
+      metodosPago,
+      cierreCaja,
+      colorFlechas,
+      colorAgregarCliente,
+      colorEditarCliente,
+      colorPagar,
+    } = req.body;
+    let resDetail
 
+
+     resDetail = await configuracionCajaModel.findOneAndUpdate(
+      { },
+      { iva,
+        metodosPago,
+        cierreCaja,
+        colorFlechas,
+        colorAgregarCliente,
+        colorEditarCliente,
+        colorPagar
+      },
+    );
+
+  res.send(resDetail);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
 const updateConfiguracionMesero = async (req, res) => {
   try {
 
@@ -63,7 +119,7 @@ const updateConfiguracionMesero = async (req, res) => {
       colorDisponible,
         meseroEdit},
     );
-    console.log(resDetail);
+
   res.send(resDetail);
   } catch (e) {
     httpError(res, e);
@@ -146,4 +202,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getConfiguracionMesero,updateConfiguracionMesero,  getItem, createItem, deleteItem };
+module.exports = { getConfiguracionCaja,getConfiguracionMesero,updateConfiguracionMesero, updateConfiguracionCaja, getItem, createItem, deleteItem };
