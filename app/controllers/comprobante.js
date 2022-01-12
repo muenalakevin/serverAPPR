@@ -64,25 +64,38 @@ const getItem = async (req, res) => {
 
 
 const createItem = async (req, res) => {
-  try {
-
+  try {      
     const {
+        caja_comprobante,
         pedido_comprobante,
         comprobante_comprobante,
         cliente_comprobante,
         fecha_comprobante,
-        total_comprobante,
         iva_comprobante,
-        detalle_comprobante
+        detalle_comprobante,
+        subTotal_comprobante,
+        subTotalConDescunto_comprobante,
+        subTotalIva_comprobante,
+        descuento_comprobante,
+        interes_comprobante,
+        total_comprobante,
+        metodoPago_comprobante
     } = req.body.comprobante;
     const resDetail = await comprobanteModel.create({
-        pedido_comprobante,
-        comprobante_comprobante,
-        cliente_comprobante,    
-        fecha_comprobante,
-        total_comprobante,
-        iva_comprobante,
-        detalle_comprobante
+      caja_comprobante,
+      pedido_comprobante,
+      comprobante_comprobante,
+      cliente_comprobante,
+      fecha_comprobante,
+      iva_comprobante,
+      detalle_comprobante,
+      subTotal_comprobante,
+      subTotalConDescunto_comprobante,
+      subTotalIva_comprobante,
+      descuento_comprobante,
+      interes_comprobante,
+      total_comprobante,
+      metodoPago_comprobante
     });
   /*   const listAll = await comprobanteModel.find({});
     req.io.emit('comprobantes', listAll); */
@@ -101,18 +114,40 @@ const updateItem = async (req, res) => {
 
     const {
       _id,
-      nombre_comprobante,
+      caja_comprobante,
+      pedido_comprobante,
       comprobante_comprobante,
-      contrasenia_comprobante,
-      correo_comprobante,
-      rol_comprobante
+      cliente_comprobante,
+      fecha_comprobante,
+      iva_comprobante,
+      detalle_comprobante,
+      subTotal_comprobante,
+      subTotalConDescunto_comprobante,
+      subTotalIva_comprobante,
+      descuento_comprobante,
+      interes_comprobante,
+      total_comprobante,
+      metodoPago_comprobante
     } = req.body.comprobante;
     let resDetail
 
     if(contrasenia_comprobante==null){
      resDetail = await comprobanteModel.findOneAndUpdate(
       { _id},
-      { nombre_comprobante, comprobante_comprobante, correo_comprobante,rol_comprobante },
+      { caja_comprobante,
+        pedido_comprobante,
+        comprobante_comprobante,
+        cliente_comprobante,
+        fecha_comprobante,
+        iva_comprobante,
+        detalle_comprobante,
+        subTotal_comprobante,
+        subTotalConDescunto_comprobante,
+        subTotalIva_comprobante,
+        descuento_comprobante,
+        interes_comprobante,
+        total_comprobante,
+        metodoPago_comprobante },
     );
     
    

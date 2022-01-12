@@ -8,6 +8,7 @@ const createItem = async (req, res) => {
   try {
 
     const {
+      caja,
         nombre_egreso,
         detalle_egreso,
         observacion_egreso,
@@ -16,6 +17,7 @@ const createItem = async (req, res) => {
     } = req.body.egreso;
     const id_cajero =  req.user_token._id;
     const resDetail = await egresoModel.create({
+      caja,
         nombre_egreso,
         id_cajero,
         detalle_egreso,

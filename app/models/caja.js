@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const cajaSchema = new mongoose.Schema({
+
+
     id_cajero:{
         type: String,
         required: true
@@ -9,15 +11,28 @@ const cajaSchema = new mongoose.Schema({
 
 
     },
+    cierre_caja:{
+        type: Number,
+
+
+    },
     cantidad_egreso:{
         type: Number,
 
     },
     cantidad_ingreso:{
-        type: String,
+        type: Number,
+
+    },
+    cantidad_intereses:{
+        type: Number,
 
     },
     cantidad_descuentos:{
+        type: Number,
+
+    },
+    cantidad_impuestos:{
         type: Number,
 
     },
