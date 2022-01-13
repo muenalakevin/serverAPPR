@@ -2,6 +2,33 @@ const { httpError } = require("../helpers/handleError");
 const cajaModel = require("../models/caja");
 
 
+const getCajaFecha = async (req, res) => {
+  try {
+    const {
+      fechaInicio,
+      fechaFin,
+      tipoSeleccion,
+      tipoFiltrado,
+      cocinero
+  } = req.body;
+  let listAll
+    if(cocinero != ""){
+      listAll = await cajaModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin},id_cocinero:cocinero});
+      res.send(listAll);
+    }else{
+      listAll = await cajaModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}});
+      /* listAll = await cajaModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}}); */
+      res.send(listAll);
+    }
+
+    //.io.emit("new-message", { content: req.body.content });
+  
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
+
 const getCaja = async (req, res) => {
  
     try {
@@ -80,4 +107,4 @@ const updateItem = async (req, res) => {
 
 
 
-module.exports = { createItem,getCaja,updateItem};
+module.exports = { createItem,getCajaFecha,getCaja,updateItem};
