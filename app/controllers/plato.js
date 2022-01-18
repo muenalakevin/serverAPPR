@@ -94,8 +94,7 @@ const updateItem = async (req, res) => {
   }
 };
 const subirFoto = async (req, res) => {
-  console.log("ss");
-  console.log(req);
+
 /*   try {
 console.log(req.body);
     const {

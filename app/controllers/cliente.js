@@ -38,7 +38,7 @@ const searchEmail = async (req, res) => {
     const { correo_cliente   } = req.body;
 
     const cliente = await clienteModel.findOne({ correo_cliente});
-    console.log(cliente);
+
 if(cliente.id!=null){
   res.send(true);
 }else{
@@ -65,20 +65,22 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    console.log(req.body.cliente);
+   
     const {
       nombre_cliente,
       apellido_cliente,
       cedRuc_cliente,
       correo_cliente,
-      direccion_cliente
+      direccion_cliente,
+      telefono_cliente,
     } = req.body.cliente;
     const resDetail = await clienteModel.create({
       nombre_cliente,
       apellido_cliente,
       cedRuc_cliente,
       correo_cliente,
-      direccion_cliente
+      direccion_cliente,
+      telefono_cliente
     });
   /*   const listAll = await clienteModel.find({});
     req.io.emit('clientes', listAll); */

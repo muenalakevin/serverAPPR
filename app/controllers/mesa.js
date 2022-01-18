@@ -28,7 +28,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-console.log(req.body.mesa);
+
     const {
         nombre_mesa,
         descripcion_mesa

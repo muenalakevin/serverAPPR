@@ -38,7 +38,7 @@ const searchEmail = async (req, res) => {
     const { correo_comprobante   } = req.body;
 
     const comprobante = await comprobanteModel.findOne({ correo_comprobante});
-    console.log(comprobante);
+
 if(comprobante.id!=null){
   res.send(true);
 }else{

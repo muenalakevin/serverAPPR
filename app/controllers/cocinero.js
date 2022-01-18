@@ -70,7 +70,7 @@ const updateItem = async (req, res) => {
       { _id},
       {categorias_seleccionadas},
     );
-    console.log(resDetail);
+
   res.send(resDetail);
   } catch (e) {
     httpError(res, e);

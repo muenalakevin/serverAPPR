@@ -76,7 +76,7 @@ const createItem = async (req, res) => {
         pedidos,
         observacion
     } = req.body.pedido;
-    console.log( req.body.pedido);
+
     const id_mesero =  req.user_token._id;
     const resDetail = await pedidoModel.create({
         id_mesa,
@@ -172,7 +172,7 @@ const deleteItem = async (req, res, next) => {
       { _id:id_mesa},
       { estado:1},
     );
-    console.log(id_mesa,id_pedido)
+
     await pedidoModel.findOneAndUpdate(
       { _id:id_pedido},
       { estado:-1},);

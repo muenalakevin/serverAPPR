@@ -49,7 +49,7 @@ const searchEmail = async (req, res) => {
     const { correo_usuario   } = req.body;
 
     const usuario = await usuarioModel.findOne({ correo_usuario});
-    console.log(usuario);
+
 if(usuario.id!=null){
   res.send(true);
 }else{

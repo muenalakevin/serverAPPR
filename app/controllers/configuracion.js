@@ -14,7 +14,9 @@ const getConfiguracionCaja = async (req, res) => {
     }else{
       configuracionCaja = await configuracionCajaModel.create({
           iva:12,
-          metodosPago:[],
+          checkIVA:false,
+          metodosPago:[{nombre:"Efectivo",porcentaje:0,descuentoIncremento:false,valor:0,estado:0}],
+          descuentosIntereses:[{nombre:"Ninguno",porcentaje:0,descuentoIncremento:false,valor:0,estado:0}],
           cierreCaja:1,
           colorFlechas:{check:false,color: "#212529"},
           colorAgregarCliente:{check:false,color: "#212529"},
@@ -61,7 +63,9 @@ const updateConfiguracionCaja = async (req, res) => {
   try {
     const {
       iva,
+      checkIVA,
       metodosPago,
+      descuentosIntereses,
       cierreCaja,
       colorFlechas,
       colorAgregarCliente,
@@ -70,11 +74,13 @@ const updateConfiguracionCaja = async (req, res) => {
     } = req.body;
     let resDetail
 
-
+console.log(req.body);
      resDetail = await configuracionCajaModel.findOneAndUpdate(
       { },
       { iva,
+        checkIVA,
         metodosPago,
+        descuentosIntereses,
         cierreCaja,
         colorFlechas,
         colorAgregarCliente,

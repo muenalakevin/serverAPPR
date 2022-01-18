@@ -4,7 +4,15 @@ const configuracionCajaSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    checkIVA:{
+        type: Boolean,
+        required: true
+    },
     metodosPago:{
+        type: Array,
+        required: true
+    },
+    descuentosIntereses:{
         type: Array,
         required: true
     },
