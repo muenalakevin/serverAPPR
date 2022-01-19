@@ -1,6 +1,7 @@
 const { httpError } = require("../helpers/handleError");
 const configuracionMeseroModel = require("../models/configuracion.mesero");
 const configuracionCajaModel = require("../models/configuracion.caja");
+const configuracionEstiloModel = require("../models/configuracion.estilo");
 const platoModel = require("../models/plato");
 
 
@@ -53,6 +54,31 @@ const getConfiguracionMesero = async (req, res) => {
             meseroEdit:false
         });
         res.send(configuracionMesero);
+    }
+   
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const getConfiguracionEstilo = async (req, res) => {
+ 
+  try {
+
+    let configuracionEstilo = await configuracionEstiloModel.findOne();
+    
+    if(configuracionEstilo!=undefined){
+        res.send(configuracionEstilo);
+    }else{
+        configuracionEstilo = await configuracionEstiloModel.create({
+            colorAplicacion:{check:false,color: "#ffb13c"},
+            colorSatisfaccion:{check:false,color: "#28a745"},
+            colorSatisfaccionMedia:{check:false,color: "#ffc107"},
+            colorDisatisfaccion:{check:false,color: "#dc3545"},
+            colorFueraTiempo:{check:false,color: "#343a40"},
+            colorOcupada:{check:false,color: "#6c757d"},
+            colorDisponible:{check:false,color: "#0d6efd"},
+        });
+        res.send(configuracionEstilo);
     }
    
   } catch (e) {
@@ -115,6 +141,46 @@ const updateConfiguracionMesero = async (req, res) => {
      resDetail = await configuracionMeseroModel.findOneAndUpdate(
       { },
       {satisfaccionAdecuada,
+        satisfaccionMedia,
+        disatisfaccion,
+        colorSatisfaccion,
+        colorSatisfaccionMedia,
+        colorDisatisfaccion,
+        colorFueraTiempo,
+      colorOcupada,
+      colorDisponible,
+        meseroEdit},
+    );
+
+  res.send(resDetail);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const updateConfiguracioEstilo = async (req, res) => {
+  try {
+
+    const {
+      satisfaccionAplicacion,
+      satisfaccionAdecuada,
+      satisfaccionMedia,
+      disatisfaccion,
+      colorSatisfaccion,
+      colorSatisfaccionMedia,
+      colorDisatisfaccion,
+      colorFueraTiempo,
+      colorOcupada,
+      colorDisponible,
+      meseroEdit
+    } = req.body;
+    let resDetail
+
+
+     resDetail = await configuracioEstiloModel.findOneAndUpdate(
+      { },
+      {
+        satisfaccionAplicacion,
+        satisfaccionAdecuada,
         satisfaccionMedia,
         disatisfaccion,
         colorSatisfaccion,
@@ -208,4 +274,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getConfiguracionCaja,getConfiguracionMesero,updateConfiguracionMesero, updateConfiguracionCaja, getItem, createItem, deleteItem };
+module.exports = {getConfiguracionEstilo, getConfiguracionCaja,getConfiguracionMesero,updateConfiguracioEstilo,updateConfiguracionMesero, updateConfiguracionCaja, getItem, createItem, deleteItem };
