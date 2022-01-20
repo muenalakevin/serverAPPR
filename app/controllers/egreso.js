@@ -2,6 +2,27 @@ const { httpError } = require("../helpers/handleError");
 const egresoModel = require("../models/egreso");
 
 
+const getEgresoFecha = async (req, res) => {
+  try {
+    const {
+      fechaInicio,
+      fechaFin,
+  } = req.body;
+  let listAll
+   
+      listAll = await egresoModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}});
+      /* listAll = await cajaModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin}}); */
+      res.send(listAll);
+
+
+    //.io.emit("new-message", { content: req.body.content });
+  
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
+
 const getItemsCaja = async (req, res) => {
   const  _id  = req.params._id;
   try {
@@ -45,4 +66,4 @@ const createItem = async (req, res) => {
 
 
 
-module.exports = { createItem,getItemsCaja};
+module.exports = { getEgresoFecha,createItem,getItemsCaja};

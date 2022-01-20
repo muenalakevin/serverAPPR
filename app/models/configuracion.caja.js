@@ -19,22 +19,6 @@ const configuracionCajaSchema = new mongoose.Schema({
     cierreCaja:{
         type: Number,
         required: true
-    },
-    colorFlechas:{
-        type: Object,
-        required: true
-    },
-    colorAgregarCliente:{
-        type: Object,
-        required: true
-    },
-    colorEditarCliente:{
-        type: Object,
-        required: true
-    },
-    colorPagar:{
-        type: Object,
-        required: true
     }
 },{
     timestamps:true,

@@ -12,30 +12,6 @@ const configuracionMeseroSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    colorSatisfaccion:{
-        type: Object,
-        required: true
-    },
-    colorSatisfaccionMedia:{
-        type: Object,
-        required: true
-    },
-    colorDisatisfaccion:{
-        type: Object,
-        required: true
-    },
-    colorFueraTiempo:{
-        type: Object,
-        required: true
-    },
-    colorOcupada:{
-        type: Object,
-        required: true
-    },
-    colorDisponible:{
-        type: Object,
-        required: true
-    },
     
 
     meseroEdit:{

@@ -40,6 +40,16 @@ const getItems = async (req, res) => {
     httpError(res, e);
   }
 };
+const getItemsAll = async (req, res) => {
+  try {
+    const listAll = await pedidoModel.find();
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
 
 const getItem = async (req, res) => {
     try {
@@ -193,4 +203,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, getPedidosFecha, getItem,enviarPedido,getItem2, createItem,updateItem, deleteItem };
+module.exports = { getItems, getPedidosFecha,getItemsAll, getItem,enviarPedido,getItem2, createItem,updateItem, deleteItem };

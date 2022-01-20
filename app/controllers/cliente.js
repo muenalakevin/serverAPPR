@@ -103,7 +103,8 @@ const updateItem = async (req, res) => {
       apellido_cliente,
       cedRuc_cliente,
       correo_cliente,
-      direccion_cliente
+      direccion_cliente,
+      telefono_cliente
     } = req.body.cliente;
     let resDetail
 
@@ -114,7 +115,8 @@ const updateItem = async (req, res) => {
         apellido_cliente,
         cedRuc_cliente,
         correo_cliente,
-        direccion_cliente},
+        direccion_cliente,
+        telefono_cliente},
     );
     
 

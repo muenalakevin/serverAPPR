@@ -106,8 +106,8 @@ const updateItem = async (req, res) => {
         cantidad_transferencia,
         estado
     });
-
-    res.send( resDetail );
+    const caja = await cajaModel.findOne({_id});
+    res.send( caja );
   } catch (e) {
     httpError(res, e);
   }

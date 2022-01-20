@@ -19,10 +19,6 @@ const getConfiguracionCaja = async (req, res) => {
           metodosPago:[{nombre:"Efectivo",porcentaje:0,descuentoIncremento:false,valor:0,estado:0}],
           descuentosIntereses:[{nombre:"Ninguno",porcentaje:0,descuentoIncremento:false,valor:0,estado:0}],
           cierreCaja:1,
-          colorFlechas:{check:false,color: "#212529"},
-          colorAgregarCliente:{check:false,color: "#212529"},
-          colorEditarCliente:{check:false,color: "#212529"},
-          colorPagar:{check:false,color: "#212529"},
         });
         res.send(configuracionCaja);
     }
@@ -45,12 +41,6 @@ const getConfiguracionMesero = async (req, res) => {
             satisfaccionAdecuada:5,
             satisfaccionMedia:10,
             disatisfaccion:15,
-            colorSatisfaccion:{check:false,color: "#28a745"},
-            colorSatisfaccionMedia:{check:false,color: "#ffc107"},
-            colorDisatisfaccion:{check:false,color: "#dc3545"},
-            colorFueraTiempo:{check:false,color: "#343a40"},
-            colorOcupada:{check:false,color: "#6c757d"},
-            colorDisponible:{check:false,color: "#0d6efd"},
             meseroEdit:false
         });
         res.send(configuracionMesero);
@@ -93,10 +83,6 @@ const updateConfiguracionCaja = async (req, res) => {
       metodosPago,
       descuentosIntereses,
       cierreCaja,
-      colorFlechas,
-      colorAgregarCliente,
-      colorEditarCliente,
-      colorPagar,
     } = req.body;
     let resDetail
 
@@ -108,10 +94,6 @@ console.log(req.body);
         metodosPago,
         descuentosIntereses,
         cierreCaja,
-        colorFlechas,
-        colorAgregarCliente,
-        colorEditarCliente,
-        colorPagar
       },
     );
 
@@ -127,12 +109,6 @@ const updateConfiguracionMesero = async (req, res) => {
       satisfaccionAdecuada,
       satisfaccionMedia,
       disatisfaccion,
-      colorSatisfaccion,
-      colorSatisfaccionMedia,
-      colorDisatisfaccion,
-      colorFueraTiempo,
-      colorOcupada,
-      colorDisponible,
       meseroEdit
     } = req.body;
     let resDetail
@@ -143,10 +119,6 @@ const updateConfiguracionMesero = async (req, res) => {
       {satisfaccionAdecuada,
         satisfaccionMedia,
         disatisfaccion,
-        colorSatisfaccion,
-        colorSatisfaccionMedia,
-        colorDisatisfaccion,
-        colorFueraTiempo,
       colorOcupada,
       colorDisponible,
         meseroEdit},
