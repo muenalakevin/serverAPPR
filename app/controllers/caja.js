@@ -52,6 +52,8 @@ const createItem = async (req, res) => {
         cantidad_descuentos,
         cantidad_intereses,
         cantidad_impuestos,
+        cantidad_efectivo,
+        cantidad_transferencia,
         estado,
     } = req.body.caja;
     const id_cajero =  req.user_token._id;
@@ -64,6 +66,8 @@ const createItem = async (req, res) => {
         cantidad_descuentos,
         cantidad_intereses,
         cantidad_impuestos,
+        cantidad_efectivo,
+        cantidad_transferencia,
         estado
     });
 
@@ -83,6 +87,8 @@ const updateItem = async (req, res) => {
         cantidad_descuentos,
         cantidad_intereses,
         cantidad_impuestos,
+        cantidad_efectivo,
+        cantidad_transferencia,
         estado,
     } = req.body.caja;
     const id_cajero =  req.user_token._id;
@@ -96,6 +102,8 @@ const updateItem = async (req, res) => {
         cantidad_descuentos,
         cantidad_intereses,
         cantidad_impuestos,
+        cantidad_efectivo,
+        cantidad_transferencia,
         estado
     });
 

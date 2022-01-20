@@ -5,7 +5,7 @@ const egresoSchema = new mongoose.Schema({
         required: true
     },
     caja:{
-        type: Object,
+        type: String,
         required: true
     },
     nombre_egreso:{

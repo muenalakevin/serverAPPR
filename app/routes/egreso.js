@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router();
 const checkOrigin = require('../middleware/origin')
 const JWT = require('../middleware/JWT')
-const {  createItem} = require('../controllers/egreso')
+const {  getItemsCaja,createItem} = require('../controllers/egreso')
 
 
-
+router.get('/caja/:_id',checkOrigin,JWT, getItemsCaja)
 router.post('/',checkOrigin,JWT, createItem)
 
 

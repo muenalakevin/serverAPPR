@@ -113,6 +113,7 @@ const updateItem = async (req, res) => {
       _id,
       id_mesa,
     pedidos,
+    observacion,
     estado,
     horaDeEntrega
     } = req.body.pedido;
@@ -120,13 +121,17 @@ const updateItem = async (req, res) => {
       { _id},
       { id_mesa,
         pedidos,
+        observacion,
         estado,
         horaDeEntrega},
     );
-    const mesas = await mesaModel.find({});
-    req.io.emit('mesas', mesas);
     const pedidosAll = await pedidoModel.find({estado:2});
     req.io.emit('pedidos', pedidosAll);
+
+    const mesas = await mesaModel.find({});
+  
+    req.io.emit('mesas', mesas);
+
 
     res.sendStatus(204);
   } catch (e) {

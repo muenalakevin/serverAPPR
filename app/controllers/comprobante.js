@@ -16,6 +16,17 @@ const getItems = async (req, res) => {
   }
 };
 
+const getItemsCaja = async (req, res) => {
+  const  _id  = req.params._id;
+  try {
+    const listAll = await comprobanteModel.find({caja_comprobante:_id});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
 
 const searchUsername = async (req, res) => {
   try {
@@ -79,7 +90,8 @@ const createItem = async (req, res) => {
         descuento_comprobante,
         interes_comprobante,
         total_comprobante,
-        metodoPago_comprobante
+        metodoPago_comprobante,
+        descuentoInteres_comprobante
     } = req.body.comprobante;
     const resDetail = await comprobanteModel.create({
       caja_comprobante,
@@ -95,7 +107,8 @@ const createItem = async (req, res) => {
       descuento_comprobante,
       interes_comprobante,
       total_comprobante,
-      metodoPago_comprobante
+      metodoPago_comprobante,
+      descuentoInteres_comprobante
     });
   /*   const listAll = await comprobanteModel.find({});
     req.io.emit('comprobantes', listAll); */
@@ -127,7 +140,8 @@ const updateItem = async (req, res) => {
       descuento_comprobante,
       interes_comprobante,
       total_comprobante,
-      metodoPago_comprobante
+      metodoPago_comprobante,
+      descuentoInteres_comprobante
     } = req.body.comprobante;
     let resDetail
 
@@ -147,7 +161,8 @@ const updateItem = async (req, res) => {
         descuento_comprobante,
         interes_comprobante,
         total_comprobante,
-        metodoPago_comprobante },
+        metodoPago_comprobante,
+        descuentoInteres_comprobante },
     );
     
    
@@ -183,4 +198,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };
+module.exports = { getItems,getItemsCaja, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };

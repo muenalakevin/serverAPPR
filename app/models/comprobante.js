@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const comprobanteSchema = new mongoose.Schema({
     caja_comprobante:{
-        type: Object,
+        type: String,
         required: true
     },
     pedido_comprobante:{
-        type: Object,
+        type: String,
         required: true
     },
     cliente_comprobante:{
-        type: Object,
+        type: String,
         required: true
 
     },
@@ -51,6 +51,10 @@ const comprobanteSchema = new mongoose.Schema({
         required: true
     },
     metodoPago_comprobante:{
+        type: Object,
+        required: true
+    },
+    descuentoInteres_comprobante:{
         type: Object,
         required: true
     },

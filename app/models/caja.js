@@ -36,6 +36,14 @@ const cajaSchema = new mongoose.Schema({
         type: Number,
 
     },
+    cantidad_efectivo:{
+        type: Number,
+
+    },
+    cantidad_transferencia:{
+        type: Number,
+
+    },
     estado:{
         type: Number,
         default: 0

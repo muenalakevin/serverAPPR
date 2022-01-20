@@ -161,37 +161,30 @@ const updateConfiguracioEstilo = async (req, res) => {
   try {
 
     const {
-      satisfaccionAplicacion,
-      satisfaccionAdecuada,
-      satisfaccionMedia,
-      disatisfaccion,
-      colorSatisfaccion,
-      colorSatisfaccionMedia,
-      colorDisatisfaccion,
-      colorFueraTiempo,
-      colorOcupada,
-      colorDisponible,
-      meseroEdit
-    } = req.body;
-    let resDetail
-
-
-     resDetail = await configuracioEstiloModel.findOneAndUpdate(
-      { },
-      {
-        satisfaccionAplicacion,
-        satisfaccionAdecuada,
-        satisfaccionMedia,
-        disatisfaccion,
+      colorAplicacion,
         colorSatisfaccion,
         colorSatisfaccionMedia,
         colorDisatisfaccion,
         colorFueraTiempo,
       colorOcupada,
       colorDisponible,
-        meseroEdit},
-    );
+    } = req.body;
+    let resDetail
 
+
+     resDetail = await configuracionEstiloModel.findOneAndUpdate(
+      { },
+      {
+        colorAplicacion,
+        colorSatisfaccion,
+        colorSatisfaccionMedia,
+        colorDisatisfaccion,
+        colorFueraTiempo,
+      colorOcupada,
+      colorDisponible,},
+    );
+    let configuracionEstilo = await configuracionEstiloModel.findOne();
+  req.io.emit('configuracionEstilo', configuracionEstilo);
   res.send(resDetail);
   } catch (e) {
     httpError(res, e);
