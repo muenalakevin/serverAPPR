@@ -163,6 +163,28 @@ const updateConfiguracioEstilo = async (req, res) => {
   }
 };
 
+var fs = require('fs');
+const updateLogo = async (req, res) => {
+
+  var tmp_path = req.files.image.path;
+  var target_path = './public/images/' + req.files.image.name+".png";
+  fs.rename(tmp_path, target_path, function (err) {
+    if (err) {
+      fs.unlink(tmp_path, (err) => {
+        if (err) throw err;
+        console.log('Successfully renamed - AKA moved!')
+      });
+    }
+    
+  });
+
+
+
+  console.log(req.files)
+  console.log("req.body")
+  res.send(true)
+}
+
 const getItem = async (req, res) => {
     try {
       const { _id } = req.body;
@@ -239,4 +261,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = {getConfiguracionEstilo, getConfiguracionCaja,getConfiguracionMesero,updateConfiguracioEstilo,updateConfiguracionMesero, updateConfiguracionCaja, getItem, createItem, deleteItem };
+module.exports = {getConfiguracionEstilo, getConfiguracionCaja,updateLogo,getConfiguracionMesero,updateConfiguracioEstilo,updateConfiguracionMesero, updateConfiguracionCaja, getItem, createItem, deleteItem };
