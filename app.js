@@ -62,3 +62,6 @@ dbConnect();
 http.listen(PORT, ()=>{
     console.log('nodejs app run '+PORT)
 })
+
+/* MONGODB_URI = mongodb+srv://muenala:muenala-2021@cluster0.bttez.mongodb.net/ZUBA?retryWrites=true&w=majority */
+/* MONGODB_URI = mongodb+srv://muenala:muenala-2021@cluster0.bttez.mongodb.net/APPR?retryWrites=true&w=majority */

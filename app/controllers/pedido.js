@@ -86,6 +86,7 @@ const createItem = async (req, res) => {
         pedidos,
         observacion
     } = req.body.pedido;
+    console.log(req.body.pedido);
 
     const id_mesero =  req.user_token._id;
     const resDetail = await pedidoModel.create({
@@ -94,7 +95,7 @@ const createItem = async (req, res) => {
         id_mesero,
         observacion,
         estado:1
-    });
+    }); 
     await mesaModel.findOneAndUpdate(
         { _id:id_mesa},
         { estado:2},
@@ -127,6 +128,7 @@ const updateItem = async (req, res) => {
     estado,
     horaDeEntrega
     } = req.body.pedido;
+    console.log( req.body.pedido);
       await pedidoModel.findOneAndUpdate(
       { _id},
       { id_mesa,

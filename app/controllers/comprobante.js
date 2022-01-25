@@ -113,6 +113,7 @@ const createItem = async (req, res) => {
   /*   const listAll = await comprobanteModel.find({});
     req.io.emit('comprobantes', listAll); */
     res.send(resDetail);
+    req.io.emit('calificacion');
   } catch (e) {
     httpError(res, e);
   }

@@ -86,7 +86,7 @@ const updateConfiguracionCaja = async (req, res) => {
     } = req.body;
     let resDetail
 
-console.log(req.body);
+
      resDetail = await configuracionCajaModel.findOneAndUpdate(
       { },
       { iva,
@@ -119,8 +119,6 @@ const updateConfiguracionMesero = async (req, res) => {
       {satisfaccionAdecuada,
         satisfaccionMedia,
         disatisfaccion,
-      colorOcupada,
-      colorDisponible,
         meseroEdit},
     );
 
@@ -177,11 +175,6 @@ const updateLogo = async (req, res) => {
     }
     
   });
-
-
-
-  console.log(req.files)
-  console.log("req.body")
   res.send(true)
 }
 
