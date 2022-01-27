@@ -29,7 +29,17 @@ const getCajaFecha = async (req, res) => {
 };
 
 
-const getCaja = async (req, res) => {
+const getCajas = async (req, res) => {
+ 
+  try {
+    let caja = await cajaModel.find({});
+    res.send(caja);
+   
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+  const getCaja = async (req, res) => {
  
     try {
     const id_cajero =  req.user_token._id;
@@ -115,4 +125,4 @@ const updateItem = async (req, res) => {
 
 
 
-module.exports = { createItem,getCajaFecha,getCaja,updateItem};
+module.exports = { getCajas,createItem,getCajaFecha,getCaja,updateItem};
