@@ -39,6 +39,65 @@ const getCajas = async (req, res) => {
     httpError(res, e);
   }
 };
+
+
+const getReporteCaja = async (req, res) => {
+ 
+  try {
+    console.log(req.params)
+  const {id} =  req.params;
+    let caja = await cajaModel.findOne({_id:id});
+    const fs = require("fs");
+    const PDFDocument = require("pdfkit-table");  
+
+// create document
+let doc = await new PDFDocument({ margin: 30, size: 'A4' });
+// file name
+await doc.pipe(fs.createWriteStream("./document.pdf"));
+
+// table
+
+
+const table = { 
+  title: '',
+  headers: ["Detalle", "Valor"],
+  datas: [ /* complex data */ ],
+  rows: [
+    ["Caja de apertura",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.caja_chica)],
+    ["Total de egreso",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_egreso)],
+    ["CTotal de ingreso",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_ingreso)],
+    ["Total de recargos",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_intereses)],
+    ["Total de descuentos",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_descuentos)],
+    ["Total de efectivo",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_efectivo)],
+    ["Total de transferencias",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cantidad_transferencia)],
+    ["Cierre de caja",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cierre_caja)],
+    ["Sobrante o faltante de caja",new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(caja.cierre_caja -(caja.caja_chica +  caja.cantidad_efectivo))  ],
+,
+  ],
+}
+// the magic
+await doc.table( table, { /* options / }, () => { / callback */ } );
+// doc.table() is a Promise to async/await function 
+
+// if your run express.js server
+// to show PDF on navigator
+// doc.pipe(res);
+
+// done!
+doc.pipe(res);
+await doc.end();
+const path = require('path');
+
+//b64 =  fs.readFileSync(path.join(__dirname, '/../../document.pdf'))
+//res.send(b64)
+    //res.send(doc);
+   
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+
+
   const getCaja = async (req, res) => {
  
     try {
@@ -125,4 +184,4 @@ const updateItem = async (req, res) => {
 
 
 
-module.exports = { getCajas,createItem,getCajaFecha,getCaja,updateItem};
+module.exports = { getCajas,getReporteCaja,createItem,getCajaFecha,getCaja,updateItem};
