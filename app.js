@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
     cors: {
-      origin: process.env.ORIGIN,
+      origin: '*',
       credentials: true
     }
   });
