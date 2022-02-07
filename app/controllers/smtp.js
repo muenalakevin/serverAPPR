@@ -89,7 +89,8 @@ transporter.verify((error, success) => {
 
 
 const resetPassword = async (req, res) => {
-    let host = '192.168.1.6:4200'
+    // let host = '192.168.1.6:4200'
+    let host = '3.23.157.27';
     try{
     const {
         email
