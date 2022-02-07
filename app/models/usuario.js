@@ -29,6 +29,8 @@ const usuarioSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },codeRecovery:{
+        type: String
     }
 },{
     timestamps:true,

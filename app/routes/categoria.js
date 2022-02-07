@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router();
 const checkOrigin = require('../middleware/origin')
 const JWT = require('../middleware/JWT')
-const {  getItems , getItem, createItem, updateItem, deleteItem} = require('../controllers/categoria')
+const {  getItemsAdmin,getItems , getItem, createItem, updateItem, deleteItem} = require('../controllers/categoria')
 
+router.get('/admin',checkOrigin,JWT, getItemsAdmin)
 router.get('/',checkOrigin,JWT, getItems)
 
 router.get('/:_id',checkOrigin,JWT, getItem)

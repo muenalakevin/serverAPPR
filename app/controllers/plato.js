@@ -2,10 +2,21 @@ const { httpError } = require("../helpers/handleError");
 const platoModel = require("../models/plato");
 const path = require('path')
 const  fs = require('fs-extra');
-const getItems = async (req, res) => {
+const getItemsAdmin = async (req, res) => {
  
   try {
     const listAll = await platoModel.find({});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const getItems = async (req, res) => {
+ 
+  try {
+    const listAll = await platoModel.find({estado_plato:{$lte:1}});
 
     //.io.emit("new-message", { content: req.body.content });
     res.send(listAll);
@@ -45,8 +56,10 @@ const createItem = async (req, res) => {
         categorias_plato,
         estado_plato
     });
-    const listAll = await platoModel.find({});
+    const listAllAdmin = await platoModel.find({});
+    const listAll = await platoModel.find({estado_plato:{$lte:1}});
     req.io.emit('platos', listAll);
+    req.io.emit('platosAdmin', listAllAdmin);
     res.send({ data: resDetail });
   } catch (e) {
     httpError(res, e);
@@ -85,8 +98,10 @@ const updateItem = async (req, res) => {
     );
     
    
-  const listAll = await platoModel.find({});
+  const listAllAdmin = await platoModel.find({});
+  const listAll = await platoModel.find({estado_plato:{$lte:1}});
   req.io.emit('platos', listAll);
+  req.io.emit('platosAdmin', listAllAdmin);
 
   res.send({ data: resDetail });
   } catch (e) {
@@ -133,8 +148,10 @@ const deleteItem = async (req, res, next) => {
   try {
     const { _id } = req.params;
     const resDetail =  await platoModel.findOneAndDelete({ _id});
-    const listAll =  await platoModel.find({});
+    const listAllAdmin =  await platoModel.find({});
+    const listAll = await platoModel.find({estado_plato:{$lte:1}});
     await req.io.emit('platos', listAll);
+    await req.io.emit('platosAdmin', listAllAdmin);
     res.send({ data: _id });
   } catch (e) {
     httpError(res, e);
@@ -143,4 +160,4 @@ const deleteItem = async (req, res, next) => {
 
 
 
-module.exports = { getItems, getItem, createItem, subirFoto,updateItem, deleteItem };
+module.exports = { getItemsAdmin,getItems, getItem, createItem, subirFoto,updateItem, deleteItem };

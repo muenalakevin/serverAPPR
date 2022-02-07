@@ -7,6 +7,17 @@ const bcrypt = require("bcrypt")
 const getItems = async (req, res) => {
  
   try {
+    const listAll = await usuarioModel.find({estado_usuario:{$lte:1}});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const getItemsadmin = async (req, res) => {
+ 
+  try {
     const listAll = await usuarioModel.find({});
 
     //.io.emit("new-message", { content: req.body.content });
@@ -93,8 +104,10 @@ const createItem = async (req, res) => {
       correo_usuario,
       rol_usuario
     });
-    const listAll = await usuarioModel.find({});
+    const listAll = await usuarioModel.find({estado_usuario:{$lte:1}});
+    const listAllAdmin = await usuarioModel.find({});
     req.io.emit('usuarios', listAll);
+    req.io.emit('usuariosAdmin', listAllAdmin);
     res.send({ data: resDetail });
   } catch (e) {
     httpError(res, e);
@@ -114,14 +127,15 @@ const updateItem = async (req, res) => {
       usuario_usuario,
       contrasenia_usuario,
       correo_usuario,
-      rol_usuario
+      rol_usuario,
+      estado_usuario
     } = req.body.usuario;
     let resDetail
 
     if(contrasenia_usuario==null){
      resDetail = await usuarioModel.findOneAndUpdate(
       { _id},
-      { nombre_usuario, usuario_usuario, correo_usuario,rol_usuario },
+      { nombre_usuario,estado_usuario, usuario_usuario, correo_usuario,rol_usuario },
     );
     
    
@@ -133,13 +147,51 @@ const updateItem = async (req, res) => {
 
      resDetail = await usuarioModel.findOneAndUpdate(
       { _id },
-      { nombre_usuario, usuario_usuario,contrasenia_usuario: hash, correo_usuario,rol_usuario }
+      { nombre_usuario, estado_usuario,usuario_usuario,contrasenia_usuario: hash, correo_usuario,rol_usuario }
     );
 
   }
-  const listAll = await usuarioModel.find({});
+  const listAll = await usuarioModel.find({estado_usuario:{$lte:1}});
+  const listAllAdmin = await usuarioModel.find({});
   req.io.emit('usuarios', listAll);
+  req.io.emit('usuariosAdmin', listAllAdmin);
   res.send({ data: resDetail });
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const resetUser = async (req, res) => {
+  try {
+
+    const {
+      code,
+      contrasenia_usuario,
+      repeatContrasenia_usuario,
+    } = req.body;
+   
+
+
+
+    if(code!=''){
+      const salt = await bcrypt.genSaltSync(11);
+      const hash =await bcrypt.hashSync(contrasenia_usuario, salt);
+  
+      let  resDetail = await usuarioModel.findOneAndUpdate(
+        { codeRecovery:code },
+        { contrasenia_usuario: hash, codeRecovery:''}
+      );
+      if(resDetail!=null){
+
+        res.send({ data: resDetail });
+      }else{
+        res.sendStatus(403)
+      }
+     
+    }else{
+      res.sendStatus(403)
+    }
+   
+
   } catch (e) {
     httpError(res, e);
   }
@@ -157,4 +209,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems,getItemsMesero, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };
+module.exports = {resetUser,getItemsadmin,getItems,getItemsMesero, getItem, searchEmail,searchUsername,createItem, updateItem, deleteItem };

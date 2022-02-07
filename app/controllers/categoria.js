@@ -4,11 +4,23 @@ const mesaModel = require("../models/mesa");
 const platoModel = require("../models/plato");
 
 
-const getItems = async (req, res) => {
+const getItemsAdmin = async (req, res) => {
  
   try {
 
     const listAll = await categoriaModel.find({});
+
+    //.io.emit("new-message", { content: req.body.content });
+    res.send(listAll);
+  } catch (e) {
+    httpError(res, e);
+  }
+};
+const getItems = async (req, res) => {
+ 
+  try {
+
+    const listAll = await categoriaModel.find({estado_plato:{$lte:1}});
 
     //.io.emit("new-message", { content: req.body.content });
     res.send(listAll);
@@ -42,8 +54,10 @@ const createItem = async (req, res) => {
         descripcion_categoria,
         estado_categoria
     });
-    const listAll = await categoriaModel.find({});
-    req.io.emit('categorias', listAll);
+    const listAllAdmin = await categoriaModel.find({});
+        const listAll = await categoriaModel.find({estado_categoria:{$lte:1}});
+        req.io.emit('categoriasAdmin', listAllAdmin);
+        req.io.emit('categorias', listAll);
     res.send({ data: resDetail });
   } catch (e) {
     httpError(res, e);
@@ -75,8 +89,10 @@ const updateItem = async (req, res) => {
     );
     
 
-  const listAll = await categoriaModel.find({});
-  req.io.emit('categorias', listAll);
+    const listAllAdmin = await categoriaModel.find({});
+    const listAll = await categoriaModel.find({estado_categoria:{$lte:1}});
+    req.io.emit('categoriasAdmin', listAllAdmin);
+    req.io.emit('categorias', listAll);
   res.send({ data: resDetail });
   } catch (e) {
     httpError(res, e);
@@ -115,15 +131,19 @@ const deleteItem = async (req, res, next) => {
 
 
 
-        const listAllPlatos =  await platoModel.find({});
+        const listAllPlatos =  await platoModel.find({estado_plato:{$lte:1}});
+        const listAllPlatosAdmin =  await platoModel.find({});
         await req.io.emit('platos', listAllPlatos);
+        await req.io.emit('platosAdmin', listAllPlatosAdmin);
 
-    const listAll =  await categoriaModel.find({});
-    await req.io.emit('categorias', listAll);
+        const listAllAdmin = await categoriaModel.find({});
+        const listAll = await categoriaModel.find({estado_categoria:{$lte:1}});
+        req.io.emit('categoriasAdmin', listAllAdmin);
+        req.io.emit('categorias', listAll);
     res.send({ data: _id });
   } catch (e) {
     httpError(res, e);
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+module.exports = { getItemsAdmin,getItems, getItem, createItem, updateItem, deleteItem };
