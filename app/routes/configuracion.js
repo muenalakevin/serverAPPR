@@ -5,9 +5,9 @@ const JWT = require('../middleware/JWT')
 const multipart = require('connect-multiparty');
 const {  getConfiguracionMesero,getConfiguracionCaja,updateLogo ,getConfiguracionEstilo, updateConfiguracioEstilo,updateConfiguracionCaja, getItem, createItem, updateConfiguracionMesero, deleteItem} = require('../controllers/configuracion')
 const path = require('path');
-router.get('/mesero', getConfiguracionMesero)
-router.get('/caja', getConfiguracionCaja)
-router.get('/estilo', getConfiguracionEstilo)
+router.get('/mesero', checkOrigin,getConfiguracionMesero)
+router.get('/caja',checkOrigin, getConfiguracionCaja)
+router.get('/estilo',checkOrigin, getConfiguracionEstilo)
 router.patch('/mesero',checkOrigin,JWT, updateConfiguracionMesero)
 router.patch('/caja',checkOrigin,JWT, updateConfiguracionCaja)
 router.patch('/estilo',checkOrigin,JWT, updateConfiguracioEstilo)

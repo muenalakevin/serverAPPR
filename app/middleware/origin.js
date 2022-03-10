@@ -8,6 +8,7 @@ const checkOrigin= (req, res, next)=>{
     }else{
         res.sendStatus(403);
     } */
+   // res.sendStatus(200)
     next();
 }
 

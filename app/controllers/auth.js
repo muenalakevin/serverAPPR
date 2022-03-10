@@ -8,7 +8,7 @@ const login = async (req, res) => {
   try {
     const { usuario_usuario, contrasenia_usuario } = req.body;
     const usuario = await usuarioModel.findOne({ usuario_usuario });
-
+console.log(req.body);
       if(usuario!=null){
         if(usuario.estado_usuario<=1){
         if (bcrypt.compareSync(contrasenia_usuario, usuario.contrasenia_usuario)) {
@@ -22,16 +22,16 @@ const login = async (req, res) => {
         } else {
           
           res.sendStatus(403);
-          res.json({mensaje:'Usuario o/y contraseña incorrecto'})
+          //res.json({mensaje:'Usuario o/y contraseña incorrecto'})
         }
       
     }else{
       res.sendStatus(409);
-      res.json({mensaje:'Usuario se encuentra deshabilitado'})
+      //res.json({mensaje:'Usuario se encuentra deshabilitado'})
     }
   }else{
     res.sendStatus(403);
-    res.json({mensaje:'Usuario o/y contraseña incorrecto'})
+    //res.json({mensaje:'Usuario o/y contraseña incorrecto'})
   }
   } catch (e) {
     httpError(res, e);

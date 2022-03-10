@@ -8,7 +8,7 @@ const {  getCaja,getCajas,getReporteCaja,createItem,getCajaFecha,updateItem} = r
 router.post('/fecha',checkOrigin,JWT, getCajaFecha)
 
 router.get('/',checkOrigin,JWT, getCaja)
-router.get('/reporte/:id', getReporteCaja)
+router.get('/reporte/:id', checkOrigin,getReporteCaja)
 router.get('/all',checkOrigin,JWT, getCajas)
 router.post('/',checkOrigin,JWT, createItem)
 router.patch('/',checkOrigin,JWT, updateItem)

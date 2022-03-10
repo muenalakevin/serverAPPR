@@ -7,7 +7,7 @@ const {getItem, updateItem,test,resetPassword} = require('../controllers/smtp')
 router.get('/',checkOrigin,JWT, getItem)
 
 router.post('/test',checkOrigin,JWT, test)
-router.post('/resetPassword', resetPassword)
+router.post('/resetPassword', checkOrigin,resetPassword)
 
 router.patch('/',checkOrigin,JWT, updateItem)
 

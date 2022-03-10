@@ -7,11 +7,10 @@ const getCajaFecha = async (req, res) => {
     const {
       fechaInicio,
       fechaFin,
-      tipoSeleccion,
-      tipoFiltrado,
       cocinero
   } = req.body;
   let listAll
+  console.log(req.body);
     if(cocinero != ""){
       listAll = await cajaModel.find({ createdAt:{$gte : fechaInicio,$lte :fechaFin},id_cocinero:cocinero});
       res.send(listAll);

@@ -13,7 +13,7 @@ router.get('/:_id',checkOrigin,JWT, getItem)
 
 router.post('/',checkOrigin,JWT, createItem)
 
-router.post('/resetUser',resetUser)
+router.post('/resetUser',checkOrigin,resetUser)
 
 router.post('/searchUsername',checkOrigin,JWT, searchUsername)
 
